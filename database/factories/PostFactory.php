@@ -24,7 +24,7 @@ class PostFactory extends Factory
             'category_id'   => Category::all()->random(),
             'title'         => $title = fake()->unique()->sentence(),
             'slug'          => Str::slug($title),
-            'excerpt'       => fake()->paragraph(30),
+            'excerpt'       => fake()->paragraph(15),
             'body'          => fake()->paragraph(80)
         ];
     }
