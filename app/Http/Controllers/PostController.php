@@ -9,10 +9,17 @@ class PostController extends Controller
 {
     public function index()
     {
-        $posts = Post::all();
+        $posts = Post::with('category')->latest('id')->get();
 
         return view('home', [
             'posts' => $posts,
+        ]);
+    }
+
+    public function show(Post $post)
+    {
+        return view('post', [
+            'post' => $post,
         ]);
     }
 }

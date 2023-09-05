@@ -4,9 +4,7 @@
 
 /* Estilos Base */
 @layer base {
-    body {
-        @apply text-justify;
-    }
+
 }
 
 /* Estilos adicionales */
