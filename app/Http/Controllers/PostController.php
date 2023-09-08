@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -10,9 +11,10 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::with('category')->latest('id')->get();
-
+        $categories = Category::all();
         return view('home', [
             'posts' => $posts,
+            'categories' => $categories,
         ]);
     }
 
