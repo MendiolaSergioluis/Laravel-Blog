@@ -10,16 +10,10 @@ class PostController extends Controller
 {
     public function index()
     {
-        $posts = Post::with('category')->latest('id');
-        if(request('search')){
-            $posts
-            ->where('title', 'like', '%'. request('search').'%')
-            ->orWhere('title', 'like', '%'. request('search').'%')
-            ->orWhere('excerpt', 'like', '%'. request('search').'%');
-        }
         $categories = Category::all();
+
         return view('home', [
-            'posts' => $posts->get(),
+            'posts' => Post::with('category')->latest('id')->filter(request(['search']))->get(),
             'categories' => $categories,
         ]);
     }
