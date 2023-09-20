@@ -11,6 +11,7 @@
 </head>
 <body>
     {{ $slot }}
+    <x-flash />
     @livewireScripts
 </body>
 </html>
