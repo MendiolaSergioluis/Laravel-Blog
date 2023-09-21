@@ -9,13 +9,14 @@
 
     <x-menu-desplegable-item
         href="/?{{ http_build_query(request()->except('category', 'page')) }}"
-        :activo="request()->routeIS('home')">
+        :activo="request('category') === null">
         Todas
     </x-menu-desplegable-item>
+
     @foreach ($categories as $category)
         <x-menu-desplegable-item
             href="/?category={{ $category->slug }}&{{ http_build_query(request()->except('category', 'page')) }}"
-            :activo="request()->is('categories/'. $category->slug)">
+            :activo="request('category') === $category->slug">
             {{ $category->name }}
         </x-menu-desplegable-item>
     @endforeach
