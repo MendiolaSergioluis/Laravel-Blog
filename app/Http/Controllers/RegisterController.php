@@ -25,15 +25,18 @@ class RegisterController extends Controller
 
         $attributes['slug'] = Str::slug($attributes['name']);
 
-        User::create($attributes);
+        $user = User::create($attributes);
 
-//        session()->flash('exito', 'Tu cuenta ha sido creada.');
+//      Inicia la sesión del usuario recién generado
+        auth()->login($user);
 
+//      session()->flash('exito', 'Tu cuenta ha sido creada.');
         return redirect('/')->with('exito', 'Tu cuenta ha sido creada');
     }
 
     public function create()
     {
+
         return view('register.create');
     }
 
