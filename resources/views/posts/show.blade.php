@@ -61,7 +61,9 @@
                     </div>
                 </div>
                 <section class="col-span-8 col-start-5 mt-10 space-y-6">
-                    <x-articulo-comentario/>
+                    @foreach($post->comments as $comment)
+                        <x-articulo-comentario :comment="$comment"/>
+                    @endforeach
                 </section>
             </article>
         </main>
