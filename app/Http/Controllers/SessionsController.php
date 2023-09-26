@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SessionRequest;
+
 class SessionsController extends Controller
 {
     public function destroy()
@@ -16,19 +18,11 @@ class SessionsController extends Controller
         return view('sessions.create');
     }
 
-    public function store()
+    public function store( SessionRequest $request)
     {
-        $attributes = request()->validate([
-            'email'     => ['required', 'email', 'max:255'],
-            'password'  => ['required', 'max:255', 'min:7']
-        ], [
-            'required'  => 'Este campo es requerido y no puede quedar en blanco.',
-            'max'       => 'Este campo no puede tener mas de :max caracteres.',
-            'email'     => 'El correo electrónico debe tener un formato valido.',
-            'min'       => 'El campo debe tener al menos :min caracteres.'
-        ]);
+        $attributes = $request->validated();
 
-        if (auth()->attempt($attributes)) {
+        if (auth()->attempt((array) $attributes)) {
             // IMPORTANTE: Siempre se debe regenerar la sesión.
             session()->regenerate();
 
