@@ -8,87 +8,17 @@
             <h1 class="text-center font-bold text-xl mb-10">¡Crea un Nuevo Artículo!</h1>
             <form action="/admin/posts" method="POST" novalidate enctype="multipart/form-data">
                 @csrf
-                {{-- Titulo Input --}}
-                <div class="mb-6">
-                    <label
-                        class="block mb-2 uppercase font-bold text-xs text-gray-700"
-                        for="title">
-                        Titulo
-                    </label>
-                    <input
-                        class="border border-gray-400 p-2 w-full"
-                        type="text"
-                        name="title"
-                        id="title"
-                        value="{{ old('title') }}"
-                        required
-                    >
-                    @error('title')
-                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
-                {{-- Imágen Input --}}
-                <div class="mb-6">
-                    <label
-                        class="block mb-2 uppercase font-bold text-xs text-gray-700"
-                        for="thumbnail">
-                        Imágen
-                    </label>
-                    <input
-                        class="border border-gray-400 p-2 w-full"
-                        type="file"
-                        name="thumbnail"
-                        id="thumbnail"
-                        value="{{ old('thumbnail') }}"
-                        required
-                    >
-                    @error('thumbnail')
-                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
-                {{-- Resumen Input --}}
-                <div class="mb-6">
-                    <label
-                        class="block mb-2 uppercase font-bold text-xs text-gray-700"
-                        for="excerpt">
-                        Resumen
-                    </label>
-                    <textarea
-                        class="border border-gray-400 p-2 w-full"
-                        type="text"
-                        name="excerpt"
-                        id="excerpt"
-                        required
-                    >{{ old('excerpt') }}</textarea>
-                    @error('excerpt')
-                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
-                {{-- Contenido Input --}}
-                <div class="mb-6">
-                    <label
-                        class="block mb-2 uppercase font-bold text-xs text-gray-700"
-                        for="body">
-                        Contenido
-                    </label>
-                    <textarea
-                        class="border border-gray-400 p-2 w-full"
-                        type="text"
-                        name="body"
-                        id="body"
-                        required
-                    >{{ old('body') }}</textarea>
-                    @error('body')
-                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
+                {{--Título--}}
+                <x-form.input name="title" label="Título"/>
+                {{--Imágen--}}
+                <x-form.input name="thumbnail" label="Imágen" type="file"/>
+                {{--Resumen--}}
+                <x-form.area name="excerpt" label="Resumen"/>
+                {{--Contenido--}}
+                <x-form.area name="body" label="Contenido"/>
                 {{-- Selector de Categoría --}}
                 <div class="mb-6">
-                    <label
-                        class="block mb-2 uppercase font-bold text-xs text-gray-700"
-                        for="category_id">
-                        Elige una categoría
-                    </label>
+                    <x-form.label name="category_id" label="Categoría"/>
                     <select name="category_id" id="category_id">
                         @php
                             $categories = \App\Models\Category::orderBy('name')->get();
@@ -102,9 +32,7 @@
                             </option>
                         @endforeach
                     </select>
-                    @error('category_id')
-                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                    @enderror
+                    <x-form.error name="category_id"/>
                 </div>
 
                 {{--  Button --}}
