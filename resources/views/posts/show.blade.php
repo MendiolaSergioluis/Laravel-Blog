@@ -8,7 +8,7 @@
         <main class="mx-auto mt-10 max-w-6xl space-y-6 lg:mt-20">
             <article class="mx-auto max-w-4xl gap-x-10 lg:grid lg:grid-cols-12">
                 <div class="col-span-4 mb-10 lg:pt-14 lg:text-center">
-                    <img src="/images/illustration-1.png" alt="" class="rounded-xl">
+                    <img src="{{ asset('storage/' . $post->thumbnail )  }}" alt="" class="rounded-xl">
 
                     <p class="mt-4 block text-xs text-gray-400">
                         Publicado
@@ -63,31 +63,35 @@
                 <section class="col-span-8 col-start-5 mt-10 space-y-6">
                     @auth()
                         <x-tarjeta>
-                        <form action="#" method="POST"
-                              class="flex flex-col gap-4">
-                            @csrf
+                            <form action="/posts/{{ $post->slug }}/comments" method="POST"
+                                  class="flex flex-col gap-4">
+                                @csrf
 
-                            <header class="flex flex-row items-center gap-4 font-semibold">
-                                <img src=https://i.pravatar.cc/60?u={{ auth()->id() }}" alt="usuario-avatar" width="50"
-                                     height="50" class="rounded-full">
-                                ¿Desea participar?
-                            </header>
-                            <div class="mt-4">
+                                <header class="flex flex-row items-center gap-4 font-semibold">
+                                    <img src=https://i.pravatar.cc/60?u={{ auth()->id() }}" alt="usuario-avatar"
+                                         width="50"
+                                         height="50" class="rounded-full">
+                                    ¿Desea participar?
+                                </header>
+                                <div class="mt-4">
                                 <textarea name="body" id="body" cols="30" rows="5"
                                           class="w-full rounded-xl border-gray-200 p-4 text-sm"
                                           placeholder="Escribe algo aquí..."></textarea>
-                            </div>
-                            <div class="mt-6 flex justify-end">
-                                <button type="submit"
-                                        class="rounded-2xl bg-blue-500 px-6 py-2 text-xs font-semibold uppercase text-white hover:bg-blue-600">
-                                    Comentar
-                                </button>
-                            </div>
-                        </form>
+                                    @error('body')
+                                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                                <div class="mt-6 flex justify-end">
+                                    <button type="submit"
+                                            class="rounded-2xl bg-blue-500 px-6 py-2 text-xs font-semibold uppercase text-white hover:bg-blue-600">
+                                        Comentar
+                                    </button>
+                                </div>
+                            </form>
                         </x-tarjeta>
                     @endauth
 
-                    @foreach($post->comments as $comment)
+                    @foreach($post->comments()->with('author')->latest('id')->get() as $comment)
 
                         <x-articulo-comentario :comment="$comment"/>
                     @endforeach

@@ -1,4 +1,4 @@
-<nav class="flex flex-col items-center justify-center md:flex-row md:justify-between md:items-center">
+<nav class="flex flex-col items-center justify-center md:flex-row md:justify-between md:items-center mb-10">
     <div>
         <a href="/" class="font-semibold text-3xl">
             {{-- <img src="/images/logo.svg" alt="Company Logo" width="165" height="16"> --}}
