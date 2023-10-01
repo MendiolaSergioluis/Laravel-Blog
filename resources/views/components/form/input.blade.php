@@ -11,9 +11,8 @@
         type="{{ $type }}"
         name="{{ $name }}"
         id="{{ $name }}"
-        value="{{$type !== 'password' ? old($name) : '' }}"
         required
-        {{ $attributes }}
+        {{ $attributes(['value' => $type !== 'password' ? old($name) : '', ]) }}
     >
     <x-form.error name="{{ $name }}"/>
 </div>
