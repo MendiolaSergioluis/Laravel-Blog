@@ -8,16 +8,28 @@
 
     <div class="mt-8 md:flex md:mt-0 items-center justify-center text-center">
         @auth
-            <span class="text-xs font-bold uppercase">Hola, {{ auth()->user()->name }}</span>
-            <form action="/logout" method="POST" class="text-xs font-semibold text-blue-500 mt-2 md:mt-0 md:ml-6">
-                @csrf
-                {{--  Button --}}
-                <button
-                    type="submit"
-                    class="text-xs font-bold uppercase">
+            <x-menu-desplegable>
+                <x-slot name="disparador">
+                    <button class="text-xs font-bold uppercase">Hola, {{ auth()->user()->name }}</button>
+                </x-slot>
+                <x-menu-desplegable-item href="/admin/dashboard">Panel de Control</x-menu-desplegable-item>
+                <x-menu-desplegable-item
+                    href="/admin/posts/create"
+                    :activo="request()->is('admin/posts/create')">
+                    Nuevo Artículo
+                </x-menu-desplegable-item>
+                <x-menu-desplegable-item
+                    href="#"
+                    x-data="{}"
+                    @click.prevent="document.querySelector('#logout-form').submit()">
                     Cerrar Sesión
-                </button>
-            </form>
+                </x-menu-desplegable-item>
+
+                <form action="/logout" method="POST" class="hidden" id="logout-form">
+                    @csrf
+                </form>
+            </x-menu-desplegable>
+
         @else
             <a href="/register" class="text-xs font-bold uppercase block">Registrate</a>
             <a href="/login" class="md:ml-3 text-xs font-bold uppercase block mt-2 md:mt-0">Inicia Sesión</a>

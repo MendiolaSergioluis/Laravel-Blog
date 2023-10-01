@@ -1,7 +1,7 @@
 @props([
     'name',
     'label',
-    'type'=>'text'
+    'type'
     ])
 
 <div class="mb-6">
@@ -13,6 +13,7 @@
         id="{{ $name }}"
         value="{{$type !== 'password' ? old($name) : '' }}"
         required
+        {{ $attributes }}
     >
     <x-form.error name="{{ $name }}"/>
 </div>

@@ -4,12 +4,11 @@
     </x-slot:title>
     <section class="px-6 py-8">
         <x-nav/>
-        <x-tarjeta class="max-w-lg m-auto">
-            <h1 class="text-center font-bold text-xl mb-10">¡Crea un Nuevo Artículo!</h1>
-            <form action="/admin/posts" method="POST" novalidate enctype="multipart/form-data">
+        <x-settings titulo="¡Crea un Nuevo Artículo!">
+            <form action="/admin/posts" method="POST" novalidate enctype="multipart/form-data" class="mt-10">
                 @csrf
                 {{--Título--}}
-                <x-form.input name="title" label="Título"/>
+                <x-form.input name="title" label="Título" type="text"/>
                 {{--Imágen--}}
                 <x-form.input name="thumbnail" label="Imágen" type="file"/>
                 {{--Resumen--}}
@@ -44,8 +43,7 @@
                     </button>
                 </div>
             </form>
-        </x-tarjeta>
-
+        </x-settings>
         <x-footer/>
     </section>
 </x-layout>

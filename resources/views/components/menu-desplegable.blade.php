@@ -1,6 +1,6 @@
 @props(['disparador'])
 
-<div x-data="{show:false}" class="font-semibold capitalize">
+<div x-data="{show:false}" class="font-semibold capitalize relative">
 
     {{-- Disparador --}}
     <div @click="show=!show">
