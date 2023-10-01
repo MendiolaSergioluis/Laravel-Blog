@@ -22,18 +22,7 @@ class AdminPostController extends Controller
 
     public function store()
     {
-        $attributes = request()->validate([
-            'title' => ['required', Rule::unique('posts', 'title')],
-            'thumbnail' => ['required', 'image'],
-            'excerpt' => ['required'],
-            'body' => ['required'],
-            'category_id' => ['required', Rule::exists('categories', 'id')]
-        ], [
-            'required' => 'Este campo es requerido y no puede quedar en blanco.',
-            'unique' => 'Ya fue tomado, intente con otro distinto.',
-            'category_id.exist' => 'Esa categoría no existe, intente nuevamente.',
-            'category_id.required' => 'Debe seleccionar una categoría.'
-        ]);
+        $attributes = $this->validatePost();
         $attributes['slug'] = Str::slug($attributes['title']);
         $attributes['user_id'] = auth()->id();
 
@@ -51,20 +40,9 @@ class AdminPostController extends Controller
 
     public function update(Post $post)
     {
-        $attributes = request()->validate([
-            'title' => ['required', Rule::unique('posts', 'title')->ignore($post->id)],
-            'thumbnail' => ['image'],
-            'excerpt' => ['required'],
-            'body' => ['required'],
-            'category_id' => ['required', Rule::exists('categories', 'id')]
-        ], [
-            'required' => 'Este campo es requerido y no puede quedar en blanco.',
-            'unique' => 'Ya fue tomado, intente con otro distinto.',
-            'category_id.exist' => 'Esa categoría no existe, intente nuevamente.',
-            'category_id.required' => 'Debe seleccionar una categoría.'
-        ]);
+        $attributes = $this->validatePost($post);
 
-        if (isset($attributes['thumbnail'])) {
+        if ($attributes['thumbnail'] ?? false) {
             $attributes['thumbnail'] = request()->file('thumbnail')->store('thumbnails');
         }
         $attributes['user_id'] = auth()->id();
@@ -77,5 +55,23 @@ class AdminPostController extends Controller
     {
         $post->delete();
         return back()->with('exito', 'Tú artículo fué eliminado correctamente.');
+    }
+
+    protected function validatePost(?Post $post = null): array
+    {
+        $post ?? new Post();
+
+        return request()->validate([
+            'title' => ['required', Rule::unique('posts', 'title')->ignore($post)],
+            'thumbnail' => $post->exists ? ['image'] : ['required', 'image'],
+            'excerpt' => ['required'],
+            'body' => ['required'],
+            'category_id' => ['required', Rule::exists('categories', 'id')]
+        ], [
+            'required' => 'Este campo es requerido y no puede quedar en blanco.',
+            'unique' => 'Ya fue tomado, intente con otro distinto.',
+            'category_id.exist' => 'Esa categoría no existe, intente nuevamente.',
+            'category_id.required' => 'Debe seleccionar una categoría.'
+        ]);
     }
 }
