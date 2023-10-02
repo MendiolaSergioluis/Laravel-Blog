@@ -12,12 +12,14 @@
                 <x-slot name="disparador">
                     <button class="text-xs font-bold uppercase">Hola, {{ auth()->user()->name }}</button>
                 </x-slot>
+                @admin
                 <x-menu-desplegable-item href="/admin/posts">Administrar artículos</x-menu-desplegable-item>
                 <x-menu-desplegable-item
                     href="/admin/posts/create"
                     :activo="request()->is('admin/posts/create')">
                     Nuevo Artículo
                 </x-menu-desplegable-item>
+                @endadmin
                 <x-menu-desplegable-item
                     href="#"
                     x-data="{}"
