@@ -13,6 +13,11 @@
                            class="{{ request()->is('admin/posts') ? 'text-blue-500' : '' }}">Artículos</a>
                         <a href="/admin/posts/create"
                            class="{{ request()->is('admin/posts/create') ? 'text-blue-500' : '' }}">Nuevo Artículo</a>
+                        <hr class="my-4 border-gray-300">
+                        <a href="/admin/categories"
+                           class="{{ request()->is('admin/categories') ? 'text-blue-500' : '' }}">Categorías</a>
+                        <a href="/admin/categories/create"
+                           class="{{ request()->is('admin/categories/create') ? 'text-blue-500' : '' }}">Nueva Categoría</a>
                     </li>
                 </ul>
             </aside>

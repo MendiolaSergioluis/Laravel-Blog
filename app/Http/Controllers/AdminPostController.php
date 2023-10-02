@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
@@ -30,6 +31,7 @@ class AdminPostController extends Controller
             'category_id' => ['required', Rule::exists('categories', 'id')]
         ], [
             'required' => 'Este campo es requerido y no puede quedar en blanco.',
+            'thumbnail.required' => 'Debe añadir un archivo de imágen',
             'unique' => 'Ya fue tomado, intente con otro distinto.',
             'category_id.exist' => 'Esa categoría no existe, intente nuevamente.',
             'category_id.required' => 'Debe seleccionar una categoría.'
@@ -41,7 +43,7 @@ class AdminPostController extends Controller
         $attributes['thumbnail'] = request()->file('thumbnail')->store('thumbnails');
         Post::create($attributes);
 
-        return redirect('/')->with('exito', 'Tu articulo ha sido creado satisfactoriamente.');
+        return redirect('/admin/posts')->with('exito', 'Tu articulo ha sido creado satisfactoriamente.');
     }
 
     public function edit(Post $post)

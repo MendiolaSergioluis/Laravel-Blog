@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminCategoryController;
 use App\Http\Controllers\AdminPostController;
 use App\Http\Controllers\PostCommentsController;
 use App\Http\Controllers\PostController;
@@ -22,10 +23,9 @@ Route::middleware('guest')->group(function () {
 
 Route::post('/logout', [SessionsController::class, 'destroy'])->middleware('auth');
 
-
-
 Route::middleware('can:admin')->group(function () {
     Route::resource('admin/posts', AdminPostController::class)->except('show');
+    Route::resource('admin/categories', AdminCategoryController::class)->except('show');
 
     /*Route::get('admin/posts', [AdminPostController::class, 'index']);
     Route::post('admin/posts', [AdminPostController::class, 'store']);
@@ -34,5 +34,6 @@ Route::middleware('can:admin')->group(function () {
     Route::patch('admin/posts/{post}', [AdminPostController::class, 'update']);
     Route::delete('admin/posts/{post}', [AdminPostController::class, 'destroy']);*/
 });
+
 
 
