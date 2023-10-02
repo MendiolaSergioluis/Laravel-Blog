@@ -65,7 +65,7 @@ class AdminPostController extends Controller
             'category_id.exist' => 'Esa categoría no existe, intente nuevamente.',
             'category_id.required' => 'Debe seleccionar una categoría.'
         ]);
-
+        $attributes['slug'] = Str::slug($attributes['title']);
         if ($attributes['thumbnail'] ?? false) {
             $attributes['thumbnail'] = request()->file('thumbnail')->store('thumbnails');
         }
