@@ -4,8 +4,8 @@
     </x-slot:title>
     <section class="px-6 py-8">
         <x-nav/>
-        <x-settings titulo="Administra tus Artículos">
-            <div class="mb-6 flex w-full flex-col">
+        <x-settings titulo="Administrar">
+        <div class="mb-6 flex w-full flex-col">
                 <div class="overflow-x-auto shadow">
                     <table class="w-full overflow-x-auto">
                         <tbody class="bg-white divide-y divide-gray-200">

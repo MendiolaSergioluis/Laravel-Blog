@@ -4,7 +4,7 @@
     </x-slot:title>
     <section class="px-6 py-8">
         <x-nav/>
-        <x-settings titulo="¡Crea un Nuevo Artículo!">
+        <x-settings titulo="¡Crea un nuevo artículo!">
             <form action="/admin/posts" method="POST" novalidate enctype="multipart/form-data" class="mt-10">
                 @csrf
                 {{--Título--}}
